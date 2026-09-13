@@ -1,29 +1,26 @@
 class Solution {
 public:
     int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {
-        vector<vector<int>> arr;
-        vector<vector<int>> arr2;
+        int n = img1.size();
+        int ans = 0;
 
-        for(int i=0;i<img1.size();i++){
-            for(int j=0;j<img1.size();j++){
-                if(img1[i][j])
-                    arr.push_back({i,j});
+        for(int dx = -(n-1); dx <= n-1; dx++) {
+            for(int dy = -(n-1); dy <= n-1; dy++) {
 
-                if(img2[i][j])
-                    arr2.push_back({i,j});
-            }
-        }
+                int count = 0;
 
-        map<pair<int,int>, int> mp;
-        int ans=0;
+                for(int i = 0; i < n; i++) {
+                    for(int j = 0; j < n; j++) {
 
-        for(int i=0;i<arr.size();i++){
-            for(int j=0;j<arr2.size();j++){
-                int k=arr[i][0]-arr2[j][0];
-                int l=arr[i][1]-arr2[j][1];
+                        int x = i + dx;
+                        int y = j + dy;
 
-                mp[{k,l}]++;
-                ans=max(ans,mp[{k,l}]);
+                        if(x >= 0 && x < n && y >= 0 && y < n)
+                            count += img1[i][j] && img2[x][y];
+                    }
+                }
+
+                ans = max(ans, count);
             }
         }
 
