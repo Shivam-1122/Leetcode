@@ -1,21 +1,18 @@
 class Solution {
 public:
     int maximumLengthSubstring(string s) {
-        int ans = 0;
+        int arr[256] = {};
+        int i = 0, ans = 0;
 
-        for(int i = 0; i < s.size(); i++) {
-            int arr[256]={};
-            int count = 0;
+        for(int j = 0; j < s.size(); j++) {
+            arr[s[j]]++;
 
-            for(int j = i; j < s.size(); j++) {
-                if(arr[s[j]] == 2)
-                    break;
-
-                arr[s[j]]++;
-                count++;
+            while(arr[s[j]] > 2) {
+                arr[s[i]]--;
+                i++;
             }
 
-            ans = max(ans, count);
+            ans = max(ans, j - i + 1);
         }
 
         return ans;
